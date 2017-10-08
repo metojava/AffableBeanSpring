@@ -5,11 +5,12 @@
 
 package com.affablebean.session;
 
-import com.affablebean.entity.Product;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import org.springframework.stereotype.Repository;
+
+import com.affablebean.entity.Product;
 
 @Repository
 public class ProductFacade extends AbstractFacade<Product> {

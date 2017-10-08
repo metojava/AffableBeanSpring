@@ -90,80 +90,8 @@
 
 				<div class="headerWidget">
 
-					<%-- If servlet path contains '/confirmation', do not display language toggle --%>
-					<c:if
-						test="${!fn:contains(pageContext.request.servletPath,'/confirmation')}">
-
-						<%-- language selection widget --%>
-						<c:choose>
-							<%-- When user hasn't explicitly set language,
-                             render toggle according to browser's preferred locale --%>
-							<c:when
-								test="${empty sessionScope['javax.servlet.jsp.jstl.fmt.locale.session']}">
-								<c:choose>
-									<c:when test="${pageContext.request.locale.language != 'cs'}">
-                              english
-                            </c:when>
-									<c:otherwise>
-										<c:url var="url" value="/affablebean/category/chooseLanguage">
-											<c:param name="language" value="en" />
-										</c:url>
-										<div class="bubble">
-											<a href="${url}">english</a>
-										</div>
-									</c:otherwise>
-								</c:choose> |
-
-                          <c:choose>
-									<c:when test="${pageContext.request.locale.language == 'cs'}">
-                              Äesky
-                            </c:when>
-									<c:otherwise>
-										<c:url var="url" value="/affablebean/category/chooseLanguage">
-											<c:param name="language" value="cs" />
-										</c:url>
-										<div class="bubble">
-											<a href="${url}">Äesky</a>
-										</div>
-									</c:otherwise>
-								</c:choose>
-							</c:when>
-
-							<%-- Otherwise, render widget according to the set locale --%>
-							<c:otherwise>
-								<c:choose>
-									<c:when
-										test="${sessionScope['javax.servlet.jsp.jstl.fmt.locale.session'] != 'cs'}">
-                              english
-                            </c:when>
-									<c:otherwise>
-										<c:url var="url" value="/affablebean/category/chooseLanguage">
-											<c:param name="language" value="en" />
-										</c:url>
-										<div class="bubble">
-											<a href="${url}">english</a>
-										</div>
-									</c:otherwise>
-								</c:choose> |
-
-                          <c:choose>
-									<c:when
-										test="${sessionScope['javax.servlet.jsp.jstl.fmt.locale.session'] == 'cs'}">
-                              Äesky
-                            </c:when>
-									<c:otherwise>
-										<c:url var="url" value="/affablebean/category/chooseLanguage">
-											<c:param name="language" value="cs" />
-										</c:url>
-										<div class="bubble">
-											<a href="${url}">Äesky</a>
-										</div>
-									</c:otherwise>
-								</c:choose>
-							</c:otherwise>
-						</c:choose>
-
-					</c:if>
+					Language : <a href="?language=en">English</a> | <a
+						href="?language=cs">Czech</a>
 				</div>
 
 

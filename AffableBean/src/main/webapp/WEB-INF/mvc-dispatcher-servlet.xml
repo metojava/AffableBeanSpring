@@ -106,6 +106,7 @@
 	</bean>
 
 	<tx:annotation-driven transaction-manager="transactionManagerEmf" />
+	
 	<bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix">
