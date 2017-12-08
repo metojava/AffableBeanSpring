@@ -31,8 +31,14 @@ import com.affablebean.session.OrderManager;
 import com.affablebean.session.ProductFacade;
 import com.affablebean.validator.Validator;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
+
 @Controller
+@EnableSwagger2
 @RequestMapping("/affablebean")
+@Api(value = "/affablebean", description = "main controller of affablebean application")
 public class MainCotroller implements ServletContextAware, MessageSourceAware {
 
 	private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(MainCotroller.class);
@@ -64,6 +70,7 @@ public class MainCotroller implements ServletContextAware, MessageSourceAware {
 		// // :)
 	}
 
+	@ApiOperation(value = "displays index page with product types")
 	@RequestMapping(value = { "/", "/index.jsp" }, method = RequestMethod.GET)
 	public ModelAndView index() {
 
@@ -75,6 +82,7 @@ public class MainCotroller implements ServletContextAware, MessageSourceAware {
 		return mv;
 	}
 
+	@ApiOperation(value = "displays category page with selected category products")
 	@RequestMapping(value = "/category/{categoryId}", method = RequestMethod.GET)
 	public ModelAndView category(@PathVariable("categoryId") String categoryId, HttpServletRequest request,
 			HttpServletResponse response) {
@@ -96,6 +104,7 @@ public class MainCotroller implements ServletContextAware, MessageSourceAware {
 		return mv;
 	}
 
+	@ApiOperation(value = "displays viewcart page with user selected products")
 	@RequestMapping(value = "/category/viewCart", method = RequestMethod.GET)
 	public String viewCart(HttpServletRequest request, HttpServletResponse response) {
 

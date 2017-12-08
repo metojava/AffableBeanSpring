@@ -25,6 +25,11 @@
 
 	<mvc:annotation-driven />
 
+	<!-- Enables swgger ui -->
+	<mvc:resources mapping="swagger-ui.html" location="classpath:/META-INF/resources/" />
+	<mvc:resources mapping="/webjars/**"
+		location="classpath:/META-INF/resources/webjars/" />
+
 	<!-- <bean id="localeResolverb" class="org.springframework.web.servlet.i18n.CookieLocaleResolver"> 
 		<property name="defaultLocale" value="en" /> </bean> -->
 
@@ -38,14 +43,14 @@
 		class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
 		<property name="defaultLocale" value="en" />
 	</bean>
-	
+
 	<mvc:interceptors>
 		<bean id="localeChangeInterceptor"
 			class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
 			<property name="paramName" value="language" />
 		</bean>
 	</mvc:interceptors>
-	
+
 	<!-- <bean class="org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping"> 
 		<property name="interceptors"> <list> <ref bean="localeChangeInterceptor" 
 		/> </list> </property> </bean> -->
@@ -106,7 +111,7 @@
 	</bean>
 
 	<tx:annotation-driven transaction-manager="transactionManagerEmf" />
-	
+
 	<bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix">
