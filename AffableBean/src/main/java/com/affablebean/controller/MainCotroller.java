@@ -107,7 +107,6 @@ public class MainCotroller implements ServletContextAware, MessageSourceAware {
 	public String viewCart(HttpServletRequest request, HttpServletResponse response) {
 
 		String clear = request.getParameter("clear");
-
 		HttpSession session = request.getSession();
 
 		if ((clear != null) && clear.equals("true")) {
