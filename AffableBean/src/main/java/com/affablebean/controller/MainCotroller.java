@@ -13,7 +13,6 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.MessageSourceAware;
-import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -37,8 +36,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @Controller
 @EnableSwagger2
-@RequestMapping("/affablebean")
-@Api(value = "/affablebean", description = "main controller of affablebean application")
+@Api(value = "/*", description = "main controller of affablebean application")
 public class MainCotroller implements ServletContextAware, MessageSourceAware {
 
 	private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(MainCotroller.class);
@@ -147,7 +145,7 @@ public class MainCotroller implements ServletContextAware, MessageSourceAware {
 			userPath = userView;
 		} else {
 
-			return "redirect:/affablebean/";
+			return "redirect:/";
 		}
 
 		if ("/category".equals(userView)) {
@@ -156,7 +154,7 @@ public class MainCotroller implements ServletContextAware, MessageSourceAware {
 					.toString();
 			return url;
 		}
-		String url = new StringBuilder("redirect:/affablebean" + userView).toString(); // append("/").append(categoryIdIs).toString();
+		String url = new StringBuilder("redirect:/" + userView).toString(); // append("/").append(categoryIdIs).toString();
 		return url;
 	}
 
@@ -185,7 +183,34 @@ public class MainCotroller implements ServletContextAware, MessageSourceAware {
 		}
 		// StringBuilder sb = new
 		// StringBuilder("redirect:/affablebean/category/");
-		String url = new StringBuilder("redirect:/affablebean/category/").append(categoryId).toString();
+		String url = new StringBuilder("redirect:/category/").append(categoryId).toString();
+		return url;
+	}
+
+	@RequestMapping(value = "/category/{categoryId}/addToCart/{productId}", method = RequestMethod.GET)
+	public String addtoCart(@PathVariable("categoryId") Integer categoryId, @PathVariable("productId") Integer productId,
+			HttpServletRequest request, HttpServletResponse response) {
+
+		HttpSession session = request.getSession();
+		ShoppingCart cart = (ShoppingCart) session.getAttribute("cart");
+
+		if (cart == null) {
+
+			cart = new ShoppingCart();
+			session.setAttribute("cart", cart);
+		}
+
+		// get user input from request
+		// String productId = request.getParameter("productId");
+
+		if (productId != null) {
+
+			Product product = productFacade.find(productId);
+			cart.addItem(product);
+		}
+		// StringBuilder sb = new
+		// StringBuilder("redirect:/affablebean/category/");
+		String url = new StringBuilder("redirect:/category/").append(categoryId).toString();
 		return url;
 	}
 

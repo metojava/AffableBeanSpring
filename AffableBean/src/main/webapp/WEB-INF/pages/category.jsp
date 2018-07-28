@@ -145,7 +145,7 @@
 						</div>
 					</c:when>
 					<c:otherwise>
-						<a href="<c:url value='category?${category.id}'/>"
+						<a href="<c:url value='/category/${category.id}'/>"
 							class="categoryButton"> <span class="categoryText"> <spring:message
 									code="${category.name}" />
 						</span>
@@ -156,7 +156,7 @@
 			</c:forEach>
 
 		</div>
-		-- ${pageContext.response.locale} --
+		<!-- ${pageContext.response.locale} -->
 		<div id="categoryRightColumn">
 
 			<p id="categoryTitle">${selectedCategory.name}</p>
@@ -173,7 +173,7 @@
 						<td>${product.name}<br> <span class="smallText">${product.description}</span>
 						</td>
 						<td>&euro; ${product.price} / unit</td>
-						<td><a href="addToCart/${product.id}">add to cart</a>
+						<td><a href="${selectedCategory.id}/addToCart/${product.id}">add to cart</a>
 							<form action="addToCart" method="get">
 								<input type="hidden" name="productId" value="${product.id}">
 								<input type="hidden" name="categoryId"
