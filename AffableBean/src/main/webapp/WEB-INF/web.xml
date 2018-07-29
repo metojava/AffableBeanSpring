@@ -1,38 +1,119 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
-  <display-name>Counter Web Application</display-name>
-  <servlet>
-    <servlet-name>mvc-dispatcher</servlet-name>
-    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-    <load-on-startup>1</load-on-startup>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>mvc-dispatcher</servlet-name>
-    <url-pattern>/</url-pattern>
-  </servlet-mapping>
-  <context-param>
-    <param-name>contextConfigLocation</param-name>
-    <param-value>/WEB-INF/mvc-dispatcher-servlet.xml</param-value>
-  </context-param>
-  <context-param>
-    <description>The relative path to product images</description>
-    <param-name>productImagePath</param-name>
-    <param-value>/resources/img/products/</param-value>
-  </context-param>
-  <context-param>
-    <description>The relative path to category images</description>
-    <param-name>categoryImagePath</param-name>
-    <param-value>/resources/img/categories/</param-value>
-  </context-param>
-  <context-param>
-    <description>The delivery surcharge applied to all orders</description>
-    <param-name>deliverySurcharge</param-name>
-    <param-value>3.00</param-value>
-  </context-param>
-  <session-config>
-    <session-timeout>10</session-timeout>
-  </session-config>
-  <listener>
-    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-  </listener>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	version="2.5">
+	<display-name>Counter Web Application</display-name>
+
+	<servlet>
+		<servlet-name>mvc-dispatcher</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>mvc-dispatcher</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>/WEB-INF/mvc-dispatcher-servlet.xml</param-value>
+	</context-param>
+	<context-param>
+		<description>The relative path to product images</description>
+		<param-name>productImagePath</param-name>
+		<param-value>/resources/img/products/</param-value>
+	</context-param>
+	<context-param>
+		<description>The relative path to category images</description>
+		<param-name>categoryImagePath</param-name>
+		<param-value>/resources/img/categories/</param-value>
+	</context-param>
+	<context-param>
+		<description>The delivery surcharge applied to all orders</description>
+		<param-name>deliverySurcharge</param-name>
+		<param-value>3.00</param-value>
+	</context-param>
+	<session-config>
+		<session-timeout>10</session-timeout>
+	</session-config>
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+
+	<jsp-config>
+        <jsp-property-group>
+            <description>JSP configuration for the store front</description>
+            <url-pattern>/index.jsp</url-pattern>
+            <url-pattern>/WEB-INF/view/*</url-pattern>
+            <url-pattern>/WEB-INF/jspf/error/*</url-pattern>
+            <include-prelude>/WEB-INF/jspf/header.jspf</include-prelude>
+            <include-coda>/WEB-INF/jspf/footer.jspf</include-coda>
+        </jsp-property-group>
+
+        <jsp-property-group>
+            <description>JSP configuration for the admin console</description>
+            <url-pattern>/admin/index.jsp</url-pattern>
+            <url-pattern>/admin/login.jsp</url-pattern>
+            <url-pattern>/admin/error.jsp</url-pattern>
+            <include-prelude>/admin/jspf/header.jspf</include-prelude>
+            <include-coda>/admin/jspf/footer.jspf</include-coda>
+        </jsp-property-group>
+    </jsp-config>
+
+    <error-page>
+        <error-code>403</error-code>
+        <location>/WEB-INF/jspf/error/403.jspf</location>
+    </error-page>
+
+    <error-page>
+        <error-code>404</error-code>
+        <location>/WEB-INF/jspf/error/404.jspf</location>
+    </error-page>
+
+    <error-page>
+        <error-code>500</error-code>
+        <location>/WEB-INF/jspf/error/500.jspf</location>
+    </error-page>
+	
+	
+	<login-config>
+		<auth-method>FORM</auth-method>
+		<realm-name>file</realm-name>
+		<form-login-config>
+			<form-login-page>/admin/login.jsp</form-login-page>
+			<form-error-page>/admin/error.jsp</form-error-page>
+		</form-login-config>
+	</login-config>
+
+	<security-role>
+		<description />
+		<role-name>affableBeanAdmin</role-name>
+	</security-role>
+
+	<security-constraint>
+		<display-name>Admin</display-name>
+		<web-resource-collection>
+			<web-resource-name>Affable Bean Administration</web-resource-name>
+			<description />
+			<url-pattern>/admin/*</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<description />
+			<role-name>affableBeanAdmin</role-name>
+		</auth-constraint>
+	</security-constraint>
+
+	<security-constraint>
+		<display-name>Checkout</display-name>
+		<web-resource-collection>
+			<web-resource-name>Checkout</web-resource-name>
+			<url-pattern>/checkout</url-pattern>
+			<http-method>GET</http-method>
+		</web-resource-collection>
+		<user-data-constraint>
+			<description />
+			<transport-guarantee>CONFIDENTIAL</transport-guarantee>
+		</user-data-constraint>
+	</security-constraint>
+
 </web-app>

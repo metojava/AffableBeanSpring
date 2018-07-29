@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.MessageSourceAware;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -125,7 +126,8 @@ public class MainCotroller implements ServletContextAware, MessageSourceAware {
 		ShoppingCart cart = (ShoppingCart) session.getAttribute("cart");
 
 		// calculate total
-		cart.calculateTotal(surcharge);
+		if (cart != null && !CollectionUtils.isEmpty(cart.getItems()))
+			cart.calculateTotal(surcharge);
 
 		return "/checkout";
 	}
@@ -187,8 +189,8 @@ public class MainCotroller implements ServletContextAware, MessageSourceAware {
 	}
 
 	@RequestMapping(value = "/category/{categoryId}/addToCart/{productId}", method = RequestMethod.GET)
-	public String addtoCart(@PathVariable("categoryId") Integer categoryId, @PathVariable("productId") Integer productId,
-			HttpServletRequest request, HttpServletResponse response) {
+	public String addtoCart(@PathVariable("categoryId") Integer categoryId,
+			@PathVariable("productId") Integer productId, HttpServletRequest request, HttpServletResponse response) {
 
 		HttpSession session = request.getSession();
 		ShoppingCart cart = (ShoppingCart) session.getAttribute("cart");

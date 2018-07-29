@@ -53,21 +53,13 @@
 
 	<!-- <bean class="org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping"> 
 		<property name="interceptors"> <list> <ref bean="localeChangeInterceptor" 
-		/> </list> </property> </bean> -->
+		/> </list> </property> </bean> 
 
-	<!-- <mvc:interceptors> <bean class="com.affablebean.interceptors.ExecutionTimeInterceptor"></bean> 
+    <mvc:interceptors> <bean class="com.affablebean.interceptors.ExecutionTimeInterceptor"></bean> 
 		<bean class="com.affablebean.interceptors.MaintenanceInterceptor"></bean> 
-		</mvc:interceptors> -->
+		</mvc:interceptors>
 
-	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
-		destroy-method="close">
-		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
-		<property name="url" value="jdbc:mysql://localhost:3306/affablebean" />
-		<property name="username" value="root" />
-		<property name="password" value="nbuser" />
-	</bean>
-
-	<bean id="sessionFactory"
+    <bean id="sessionFactory"
 		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
 		<property name="packagesToScan" value="com.affablebean" />
@@ -85,6 +77,14 @@
 	<bean id="transactionManager"
 		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
 		<property name="sessionFactory" ref="sessionFactory" />
+	</bean> -->
+
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://localhost:3306/affablebean" />
+		<property name="username" value="root" />
+		<property name="password" value="nbuser" />
 	</bean>
 
 	<bean id="emf"

@@ -190,7 +190,7 @@
                 </c:when>
 								<%-- otherwise send user to welcome page --%>
 								<c:otherwise>
-                    /AffableBean/affablebean/
+                    /AffableBean/
                 </c:otherwise>
 							</c:choose>
 						</c:set>
